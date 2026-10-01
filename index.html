@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>어린이집 방문 체크리스트</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏫</text></svg>">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>어린이집 방문 체크리스트</h1>
+  <nav class="tabs">
+    <button class="tab" data-tab="check">체크하기</button>
+    <button class="tab" data-tab="compare">비교하기</button>
+    <button class="tab" data-tab="backup">보관·옮기기</button>
+  </nav>
+</header>
+<div id="saveWarn" class="warnbar" hidden>저장이 안 되고 있어요. 개인정보 보호(시크릿) 모드라면 일반 모드로 열어 주세요.</div>
+<main id="main"></main>
+<script src="items.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
