@@ -86,13 +86,18 @@ function render() {
   else main.innerHTML = renderBackup();
 }
 
+// 근거 표시: v가 "x"면 원문에서 확인하지 못한 내용, "i"면 기사·검색 요약 등으로만 확인한 내용
+const VERIFY = { x: "근거 미확인", i: "간접 확인" };
+function vBadge(v) { return VERIFY[v] ? `<span class="vb ${v}">${VERIFY[v]}</span>` : ""; }
+
 function renderGuideBlock(b) {
+  const mark = b.v ? `<p class="vline">${vBadge(b.v)}${b.vt ? esc(b.vt) : ""}</p>` : "";
   if (b.p) return `<p>${esc(b.p)}</p>`;
-  if (b.note) return `<p class="gnote">${esc(b.note)}</p>`;
-  if (b.list) return `<ul class="glist">${b.list.map(x => `<li><b>${esc(x.b)}</b> ${esc(x.t)}</li>`).join("")}</ul>`;
-  if (b.table) return `<div class="tablewrap"><table class="gtable"><thead><tr>${b.table.head.map(h => `<th>${esc(h)}</th>`).join("")}</tr></thead>
+  if (b.note) return `<p class="gnote">${vBadge(b.v)}${esc(b.note)}</p>`;
+  if (b.list) return mark + `<ul class="glist">${b.list.map(x => `<li><b>${esc(x.b)}${vBadge(x.v)}</b> ${esc(x.t)}</li>`).join("")}</ul>`;
+  if (b.table) return mark + `<div class="tablewrap"><table class="gtable"><thead><tr>${b.table.head.map(h => `<th>${esc(h)}</th>`).join("")}</tr></thead>
     <tbody>${b.table.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
-  if (b.timeline) return `<ol class="timeline">${b.timeline.map(([time, t]) => `<li><time>${esc(time)}</time><span>${esc(t)}</span></li>`).join("")}</ol>`;
+  if (b.timeline) return mark + `<ol class="timeline">${b.timeline.map(([time, t]) => `<li><time>${esc(time)}</time><span>${esc(t)}</span></li>`).join("")}</ol>`;
   if (b.ask) return `<div class="ask"><h3>방문해서 물어보세요</h3><ul>${b.ask.map(q => `<li>${esc(q)}</li>`).join("")}</ul></div>`;
   return "";
 }
@@ -102,7 +107,10 @@ function renderGuide() {
     <summary><h2>${esc(sec.title)}</h2></summary>
     ${sec.blocks.map(renderGuideBlock).join("")}
   </details>`).join("");
-  return `<p class="guide-intro">어린이집이 처음인 분을 위한 설명이에요. 제목을 누르면 펼쳐져요.</p>${secs}<p class="guide-src">${esc(GUIDE_SOURCE)}</p>`;
+  const legend = `<div class="vlegend"><p>표시가 없는 내용은 정부 지침·법령 원문에서 확인한 것이에요.</p>
+    <p>${vBadge("i")}원문이 아니라 기사, 검색 요약, 개편 전 자료로만 확인한 내용이에요.</p>
+    <p>${vBadge("x")}근거를 확인하지 못했어요. 흔한 관행이나 정리한 사람의 해석이라 틀릴 수 있어요.</p></div>`;
+  return `<p class="guide-intro">어린이집이 처음인 분을 위한 설명이에요. 제목을 누르면 펼쳐져요.</p>${legend}${secs}<p class="guide-src">${esc(GUIDE_SOURCE)}</p>`;
 }
 
 function renderChips() {
