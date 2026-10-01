@@ -200,11 +200,12 @@ document.addEventListener("click", e => {
 
   if (act === "pick") { state.current = b.dataset.id; openNotes.clear(); save(); render(); }
   else if (act === "add") {
-    const name = prompt("어린이집 이름을 입력하세요", "");
-    if (name === null) return;
+    // 입력창 팝업(prompt)은 일부 앱 내 브라우저에서 막히므로, 임시 이름으로 만들고 이름 칸을 바로 고치게 한다
     const id = newId();
-    state.centers.push({ id, name: name.trim() || `어린이집 ${state.centers.length + 1}`, visitDate: "", ratings: {}, notes: {}, memo: "" });
+    state.centers.push({ id, name: `어린이집 ${state.centers.length + 1}`, visitDate: "", ratings: {}, notes: {}, memo: "" });
     state.current = id; openNotes.clear(); save(); render();
+    const nameEl = $("#nameInput");
+    if (nameEl) { nameEl.focus(); nameEl.select(); }
   }
   else if (act === "del" && c) {
     if (!confirm(`'${c.name}' 기록을 삭제할까요? 되돌릴 수 없어요.`)) return;
