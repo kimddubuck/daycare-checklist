@@ -63,4 +63,30 @@ li.none{color:var(--sub);list-style:none;margin-left:-18px}
 .primary{font:inherit;font-weight:700;background:var(--ink);color:#fff;border:2px solid var(--ink);border-radius:10px;padding:10px 16px;cursor:pointer;text-align:center}
 .primary.ghost{background:#fff;color:var(--ink)}
 .msg{font-size:14px;color:var(--mint);font-weight:700;min-height:1em}
-button:focus-visible,label:focus-within{outline:2px solid var(--mint);outline-offset:2px}
+.tab{white-space:nowrap;font-size:15px}
+.guide-intro,.guide-src{color:var(--sub);font-size:14px;margin:2px 4px 12px}
+.guide-src{margin-top:16px}
+details.guide{padding:0}
+details.guide>summary{list-style:none;cursor:pointer;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+details.guide>summary::-webkit-details-marker{display:none}
+details.guide>summary::after{content:"";flex:none;width:9px;height:9px;border-right:2.5px solid var(--sub);border-bottom:2.5px solid var(--sub);transform:rotate(45deg);margin:-4px 4px 0 0}
+details.guide[open]>summary::after{transform:rotate(-135deg);margin-top:4px}
+details.guide>:not(summary){margin-left:16px;margin-right:16px}
+details.guide>:last-child{margin-bottom:16px}
+details.guide p{margin:0 0 10px}
+.glist{margin:0 0 10px;padding:0;list-style:none}
+.glist li{border-top:1px solid var(--line);padding:10px 0}
+.glist li:first-child{border-top:0;padding-top:0}
+.glist b{display:block;font-weight:700}
+.gtable{margin-bottom:12px;min-width:0}
+.gtable td,.gtable th{text-align:left}
+.gtable td:last-child,.gtable th:last-child{text-align:right}
+.gnote{background:#FFF6E0;border-radius:10px;padding:10px 12px;font-size:15px}
+.timeline{list-style:none;margin:0 0 12px;padding:0;border-left:3px solid var(--mint-soft)}
+.timeline li{display:flex;gap:10px;padding:6px 0 6px 12px}
+.timeline time{flex:none;width:98px;font-weight:700;color:var(--mint);font-variant-numeric:tabular-nums}
+.ask{background:var(--mint-soft);border-radius:10px;padding:12px 14px}
+.ask h3{margin:0 0 6px;font-size:14px;color:var(--mint)}
+.ask ul{margin:0;padding-left:18px}
+.ask li{margin-bottom:4px}
+button:focus-visible,label:focus-within,summary:focus-visible{outline:2px solid var(--mint);outline-offset:2px}

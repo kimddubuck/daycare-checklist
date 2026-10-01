@@ -7,6 +7,7 @@
 - style.css — 색과 모양
 - app.js — 체크·비교·백업 동작
 - items.js — 체크리스트 항목 (항목을 바꿀 땐 이 파일만 고치면 됨)
+- guide.js — "기초 알기" 탭의 설명 글 (교육부 「2026년도 보육사업안내」 기준. 금액·기준은 해마다 바뀌니 연초에 점검)
 
 ## 올려 둔 곳
 - 주소: https://kimddubuck.github.io/daycare-checklist/ (GitHub Pages)

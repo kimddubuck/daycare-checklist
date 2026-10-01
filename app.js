@@ -43,7 +43,7 @@ function save() {
 }
 
 let state = load();
-let tab = "check";
+let tab = state.centers.length ? "check" : "guide"; // 아직 등록한 곳이 없으면 설명부터 보여준다
 let openNotes = new Set();
 
 /* ---------- 계산 ---------- */
@@ -80,9 +80,29 @@ function pctText(p) { return p === null ? "–" : p + "점"; }
 function render() {
   document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === tab));
   const main = $("#main");
-  if (tab === "check") main.innerHTML = renderCheck();
+  if (tab === "guide") main.innerHTML = renderGuide();
+  else if (tab === "check") main.innerHTML = renderCheck();
   else if (tab === "compare") main.innerHTML = renderCompare();
   else main.innerHTML = renderBackup();
+}
+
+function renderGuideBlock(b) {
+  if (b.p) return `<p>${esc(b.p)}</p>`;
+  if (b.note) return `<p class="gnote">${esc(b.note)}</p>`;
+  if (b.list) return `<ul class="glist">${b.list.map(x => `<li><b>${esc(x.b)}</b> ${esc(x.t)}</li>`).join("")}</ul>`;
+  if (b.table) return `<div class="tablewrap"><table class="gtable"><thead><tr>${b.table.head.map(h => `<th>${esc(h)}</th>`).join("")}</tr></thead>
+    <tbody>${b.table.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+  if (b.timeline) return `<ol class="timeline">${b.timeline.map(([time, t]) => `<li><time>${esc(time)}</time><span>${esc(t)}</span></li>`).join("")}</ol>`;
+  if (b.ask) return `<div class="ask"><h3>방문해서 물어보세요</h3><ul>${b.ask.map(q => `<li>${esc(q)}</li>`).join("")}</ul></div>`;
+  return "";
+}
+
+function renderGuide() {
+  const secs = GUIDE.map(sec => `<details class="card guide" id="${sec.id}"${sec.open ? " open" : ""}>
+    <summary><h2>${esc(sec.title)}</h2></summary>
+    ${sec.blocks.map(renderGuideBlock).join("")}
+  </details>`).join("");
+  return `<p class="guide-intro">어린이집이 처음인 분을 위한 설명이에요. 제목을 누르면 펼쳐져요.</p>${secs}<p class="guide-src">${esc(GUIDE_SOURCE)}</p>`;
 }
 
 function renderChips() {
